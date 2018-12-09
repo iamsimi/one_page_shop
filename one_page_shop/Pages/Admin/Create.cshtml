@@ -1,0 +1,52 @@
+﻿@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+
+<form method="post" class="container" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-sm-4">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group">
+                <div>
+                    <label>Name</label>
+                    <input asp-for="Product.Name" class="form-control" />
+                </div>
+
+                <div>
+                    <label>Price</label>
+                    <input asp-for="Product.Price" class="form-control" />
+                </div>
+                <div>
+                    <label>Product Image</label>
+                    <input asp-for="Product.ProductImageFormFile" type="file" id="file" class="form-control" />
+                    <label class="text-danger">image dimensions not greater than 235px by 235px and size not greater than 100kb</label>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+    <script type="text/javascript">
+        var uploadField = document.getElementById("file");
+
+        uploadField.onchange = function () {
+            if (this.files[0].size > 102400) {
+                alert("File is too big!");
+                this.value = "";
+            };
+        };
+    </script>

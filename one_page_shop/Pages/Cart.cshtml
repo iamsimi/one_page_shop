@@ -1,0 +1,55 @@
+﻿@page
+@model one_page_shop.Pages.CartModel
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div style="padding-top: 50px;">
+    <h2>Cart</h2>
+
+    @if (!Model.Products.Any())
+    {
+        <h3>You do not have products in your cart yet</h3>
+    }
+    else
+    {
+        <form method="post">
+            @foreach (var product in Model.Products)
+            {
+                <div class="media">
+                    <div class="media-left media-middle">
+                        @{var imageUri = "data:image/png;base64," + Convert.ToBase64String(product.ProductImage);}
+                        <img src="@imageUri" style="height:64px; width:64px" />
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">@product.Name</h5>
+                        <p>@product.Price</p>
+                        <button type="submit" class="btnRemove btn btn-danger" asp-page-handler="remove" asp-route-id="@product.Id">Remove from Cart</button>
+                    </div>
+                </div>                
+                <hr />
+            }
+            <button type="submit" class="btnBuy btn btn-primary">Buy</button>
+        </form>
+
+    }
+
+
+
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.btnRemove').on('click', function () {
+                alert("item removed to cart");
+            });
+            $('.btnBuy').on('click', function () {
+                alert("Thank you for your patronage");
+            });
+        });
+    </script>
+}
